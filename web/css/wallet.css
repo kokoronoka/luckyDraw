@@ -1,0 +1,437 @@
+/* Customer wallet — editorial column from the 6 Nov My Tickets revision. */
+
+body.wallet {
+  --ground: #ECE5D6;
+  --paper: #FBF7EE;
+  --card: #FFFDF8;
+  --ink: #231C13;
+  --text: #4A3D2C;
+  --soft: #8A7655;
+  --gold: #A9843F;
+  --gold-d: #7E5F26;
+  --hair: rgba(169, 132, 63, .28);
+  --hair2: rgba(169, 132, 63, .16);
+  --mt-ok: #5B7F56;
+  --metal: linear-gradient(175deg, #E9CF8E 0%, #C9A25A 38%, #9C7633 72%, #7A5A22 100%);
+  --btn: linear-gradient(180deg, #C7A25E, #9E7A36);
+  --disp: "Cormorant Garamond", "Times New Roman", serif;
+  --sans: Jost, "Helvetica Neue", system-ui, sans-serif;
+  background: var(--ground);
+  color: var(--text);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+html[data-lang="zh"] body.wallet {
+  --disp: "Noto Serif SC", "Songti SC", serif;
+  --sans: "Noto Sans SC", "PingFang SC", Jost, sans-serif;
+}
+
+body.wallet .stage { display: flex; justify-content: center; padding: 28px 0 56px; }
+body.wallet:has(.env-banner) .stage { padding-bottom: 6rem; }
+@media (max-width: 440px) {
+  body.wallet .stage { padding-block: 0 32px; }
+}
+
+body.wallet .phone {
+  width: 390px; max-width: 100%; position: relative;
+  background: var(--paper); overflow: hidden; border-radius: 30px;
+  box-shadow: 0 40px 80px rgba(90, 64, 24, .18);
+}
+@media (max-width: 440px) {
+  body.wallet .phone { border-radius: 0; box-shadow: none; width: 100%; }
+}
+body.wallet .bg {
+  position: absolute; left: 0; right: 0; top: 0; height: 520px;
+  background: url("../assets/wallet/atrium.webp") center 28% / cover;
+  opacity: .9;
+}
+body.wallet .bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(251, 247, 238, .45), rgba(251, 247, 238, .7) 45%, var(--paper) 92%);
+}
+body.wallet .wrap {
+  position: relative;
+  padding: 16px max(22px, env(safe-area-inset-right)) 40px max(22px, env(safe-area-inset-left));
+  display: flex; flex-direction: column;
+}
+body.wallet #content { display: flex; flex-direction: column; }
+body.wallet .phone p { margin: 0; }
+body.wallet button { font-family: inherit; }
+body.wallet button:focus-visible { outline: 1.5px solid var(--gold-d); outline-offset: 3px; }
+
+body.wallet .g,
+body.wallet .g sup {
+  background: var(--metal);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+}
+body.wallet .eb {
+  font: 500 10.5px/1 var(--sans); letter-spacing: .32em; text-transform: uppercase; color: var(--gold);
+}
+html[data-lang="zh"] body.wallet .eb { letter-spacing: .4em; font-size: 11px; text-transform: none; }
+body.wallet .rule {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(169, 132, 63, 0), var(--hair) 18%, var(--hair) 82%, rgba(169, 132, 63, 0));
+}
+
+body.wallet .top { display: flex; justify-content: space-between; align-items: center; height: 34px; }
+body.wallet .top > img { height: 14px; }
+body.wallet .top .lang-switch {
+  display: flex; align-items: center; gap: 2px;
+  background: none; border: 0; border-radius: 0; padding: 0; overflow: visible;
+  font: 500 11px/1 var(--sans); letter-spacing: .14em;
+}
+body.wallet .top .lang-switch > span { color: var(--hair); padding: 7px 0; }
+body.wallet .top .lang-btn {
+  all: unset; cursor: pointer; padding: 7px 9px;
+  color: var(--soft); border-bottom: 1px solid transparent; border-radius: 0;
+  min-height: 0; background: none; box-shadow: none;
+  font: 500 11px/1 var(--sans); letter-spacing: .14em;
+}
+body.wallet .top .lang-btn[aria-pressed="true"],
+body.wallet .top .lang-btn.is-on {
+  color: var(--ink); background: none; box-shadow: none; border-bottom-color: var(--gold);
+}
+
+body.wallet .head {
+  text-align: center; margin-top: 26px;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+body.wallet .head img { width: 132px; height: auto; display: none; }
+html[data-lang="zh"] body.wallet .head img.zh,
+html[data-lang="en"] body.wallet .head img.en { display: block; }
+
+html[data-lang="en"] body.wallet h1.h1,
+html[data-lang="en"] body.wallet h2.h2 {
+  font-family: "Cormorant Garamond", "Times New Roman", serif;
+  font-style: italic; font-weight: 500; color: var(--ink);
+}
+html[data-lang="zh"] body.wallet h1.h1,
+html[data-lang="zh"] body.wallet h2.h2 {
+  font-family: "Noto Serif SC", serif; font-style: normal; font-weight: 600; color: var(--ink);
+}
+body.wallet h1.h1 { font-size: 40px; line-height: 1; margin: 0; letter-spacing: .005em; }
+html[data-lang="zh"] body.wallet h1.h1 { font-size: 30px; line-height: 1.2; letter-spacing: .12em; }
+body.wallet h2.h2 { font-size: 32px; line-height: 1; margin: 0; }
+html[data-lang="zh"] body.wallet h2.h2 { font-size: 24px; line-height: 1.2; letter-spacing: .1em; }
+
+body.wallet .tscene { perspective: 1000px; display: flex; justify-content: center; margin-top: 28px; }
+body.wallet .ticket {
+  position: relative; width: 346px; max-width: 100%; aspect-ratio: 12 / 5;
+  transform-style: preserve-3d; cursor: grab; touch-action: none; user-select: none;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+}
+body.wallet .ticket.drag { cursor: grabbing; }
+body.wallet .ticket.spring { transition: transform .9s cubic-bezier(.2, 1.5, .35, 1); }
+body.wallet .ticket .face,
+body.wallet .ticket .edge { position: absolute; inset: 0; background: url("../assets/wallet/gold-ticket.png") center / 100% 100%; }
+body.wallet .ticket .edge { transform: translateZ(-5px); filter: brightness(.6) saturate(1.05); }
+body.wallet .ticket .edge2 { transform: translateZ(-2.5px); filter: brightness(.78); }
+body.wallet .ticket .shadow {
+  position: absolute; left: 8%; right: 8%; bottom: -20px; height: 26px;
+  background: radial-gradient(ellipse at center, rgba(90, 64, 24, .32), rgba(90, 64, 24, 0) 70%);
+  transform: translateZ(-30px); filter: blur(5px);
+}
+body.wallet .ticket .glare {
+  position: absolute; inset: 0; transform: translateZ(1px); pointer-events: none; mix-blend-mode: soft-light;
+  background: radial-gradient(circle at var(--gx, 30%) var(--gy, 20%), rgba(255, 255, 255, .95), rgba(255, 255, 255, 0) 45%);
+}
+body.wallet .ticket .sheen {
+  position: absolute; inset: 0; transform: translateZ(1.5px); pointer-events: none; mix-blend-mode: overlay; overflow: hidden;
+}
+body.wallet .ticket .sheen::before {
+  content: ""; position: absolute; top: -20%; bottom: -20%; width: 36%; left: var(--sx, -60%);
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 250, 230, .65), rgba(255, 255, 255, 0));
+  transform: skewX(-12deg);
+}
+body.wallet .ticket .l {
+  position: absolute; left: 8%; top: 0; bottom: 0; width: 62%;
+  display: flex; flex-direction: column; justify-content: center; gap: 7px; transform: translateZ(14px);
+}
+body.wallet .tk-eb { font: 500 9.5px/1 var(--sans); letter-spacing: .32em; color: #6A4D17; text-transform: uppercase; }
+html[data-lang="zh"] body.wallet .tk-eb { letter-spacing: .28em; text-transform: none; }
+body.wallet .tk-name {
+  font: 600 29px/1.05 "Noto Serif SC", serif; color: #3E2B0C; letter-spacing: .06em;
+  text-shadow: 0 1px 0 rgba(255, 240, 205, .6);
+}
+body.wallet .tk-ph { font: 500 12.5px/1 var(--sans); color: #6A4D17; letter-spacing: .12em; font-variant-numeric: tabular-nums; }
+body.wallet .ticket .r {
+  position: absolute; right: 1.6%; top: 0; bottom: 0; width: 24.5%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  transform: translateZ(22px);
+}
+body.wallet .tk-n {
+  font: 600 58px/1 "Cormorant Garamond", serif; color: #3E2B0C;
+  font-variant-numeric: lining-nums; text-shadow: 0 1px 0 rgba(255, 240, 205, .7);
+}
+body.wallet .tk-l {
+  font: 500 8.5px/1.35 var(--sans); letter-spacing: .24em; color: #6A4D17;
+  text-transform: uppercase; text-align: center;
+}
+html[data-lang="zh"] body.wallet .tk-l { letter-spacing: .18em; text-transform: none; }
+body.wallet .hint {
+  text-align: center; font: 400 11px/1 var(--sans); letter-spacing: .06em;
+  color: var(--soft); margin-top: 20px; transition: opacity .6s;
+}
+
+body.wallet .sh { display: flex; align-items: center; gap: 14px; margin: 44px 0 18px; }
+body.wallet .sh .rule { flex: 1; }
+body.wallet .clock { display: flex; justify-content: space-between; align-items: flex-start; padding: 0 4px; }
+body.wallet .clock .u { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; position: relative; }
+body.wallet .clock .u + .u::before {
+  content: ""; position: absolute; left: 0; top: 10px; height: 34px; width: 1px; background: var(--hair2);
+}
+body.wallet .clock b {
+  font: 500 50px/1 "Cormorant Garamond", serif; color: var(--ink);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+body.wallet .clock small { font: 500 9.5px/1 var(--sans); letter-spacing: .26em; text-transform: uppercase; color: var(--soft); }
+html[data-lang="zh"] body.wallet .clock small { letter-spacing: .2em; font-size: 11px; text-transform: none; }
+body.wallet .when { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 22px; }
+body.wallet .when .when-copy { display: flex; flex-direction: column; gap: 6px; }
+body.wallet .when b { font: 500 14px/1.2 var(--sans); color: var(--ink); }
+body.wallet .live { display: flex; align-items: center; gap: 7px; font: 400 12px/1 var(--sans); color: var(--soft); }
+body.wallet .live i { width: 6px; height: 6px; border-radius: 50%; background: #C8384B; }
+body.wallet .ghost {
+  all: unset; cursor: pointer; box-sizing: border-box;
+  display: inline-flex; align-items: center; gap: 7px;
+  font: 500 11px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase;
+  color: var(--gold-d); border: 1px solid var(--hair); border-radius: 99px;
+  padding: 11px 15px; white-space: nowrap;
+}
+html[data-lang="zh"] body.wallet .ghost { letter-spacing: .1em; font-size: 12px; text-transform: none; }
+body.wallet .ghost svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+body.wallet .ghost.on { background: var(--btn); border-color: transparent; color: #fff; }
+
+body.wallet .track { position: relative; margin-top: 30px; }
+body.wallet .track-row { display: grid; grid-template-columns: repeat(5, 1fr); }
+body.wallet .track::before { content: ""; position: absolute; left: 10%; right: 10%; top: 5px; height: 1px; background: var(--hair); }
+body.wallet .track .pip {
+  position: absolute; z-index: 2; top: 0; width: 11px; height: 11px; border-radius: 50%;
+  background: var(--gold); box-shadow: 0 0 0 4px rgba(169, 132, 63, .16);
+  pointer-events: none;
+  transition: left .5s cubic-bezier(.22, .8, .24, 1), transform .45s ease, border-radius .45s ease;
+}
+body.wallet .track .pip.sf { border-radius: 1px; transform: rotate(45deg); }
+body.wallet .st {
+  all: unset; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 9px; position: relative; text-align: center;
+}
+body.wallet .st .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--paper); border: 1px solid var(--gold); }
+body.wallet .st.on .dot { background: var(--paper); }
+body.wallet .st.sf .dot { transform: rotate(45deg); border-radius: 1px; }
+body.wallet .st b { font: 500 11px/1 var(--sans); color: var(--soft); letter-spacing: .04em; }
+body.wallet .st.on b { color: var(--ink); }
+body.wallet .st small { font: 400 10.5px/1 var(--sans); color: var(--soft); }
+
+body.wallet .tabs {
+  display: flex; gap: 26px; justify-content: center; margin: 48px 0 20px;
+  border-bottom: 1px solid var(--hair2);
+}
+body.wallet .tabs button {
+  all: unset; cursor: pointer; padding: 0 2px 12px;
+  font: 500 12px/1 var(--sans); letter-spacing: .24em; text-transform: uppercase; color: var(--soft);
+  border-bottom: 1.5px solid transparent; margin-bottom: -1px;
+  display: flex; align-items: center; gap: 8px;
+}
+html[data-lang="zh"] body.wallet .tabs button { letter-spacing: .2em; font-size: 13px; text-transform: none; }
+body.wallet .tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--gold); }
+body.wallet .tabs i {
+  font: 600 9.5px/16px var(--sans); font-style: normal; letter-spacing: 0;
+  width: 16px; height: 16px; border-radius: 50%; background: var(--gold); color: #fff; text-align: center;
+}
+
+body.wallet .card {
+  background: var(--card); border-radius: 22px;
+  box-shadow: 0 1px 0 rgba(169, 132, 63, .12), 0 24px 48px rgba(90, 64, 24, .08);
+  border: 1px solid var(--hair2); padding: 24px 22px; margin: 0;
+}
+body.wallet .row1 { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+body.wallet .open,
+body.wallet .pill-status {
+  display: flex; align-items: center; gap: 7px;
+  font: 500 10.5px/1 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--mt-ok);
+}
+html[data-lang="zh"] body.wallet .open,
+html[data-lang="zh"] body.wallet .pill-status { letter-spacing: .12em; text-transform: none; font-size: 12px; }
+body.wallet .open i,
+body.wallet .pill-status i { width: 6px; height: 6px; border-radius: 50%; background: var(--mt-ok); box-shadow: 0 0 0 3px rgba(91, 127, 86, .15); }
+body.wallet .pill-status.drawn,
+body.wallet .pill-status.closed,
+body.wallet .pill-status.soon { color: var(--soft); }
+body.wallet .pill-status.drawn i,
+body.wallet .pill-status.closed i,
+body.wallet .pill-status.soon i { background: var(--soft); box-shadow: none; }
+
+body.wallet .kv { margin-top: 20px; display: flex; flex-direction: column; }
+body.wallet .kv > div {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  padding: 12px 0; border-top: 1px solid var(--hair2);
+  font: 400 12.5px/1.3 var(--sans); color: var(--soft);
+}
+body.wallet .kv b { font: 500 13px/1.3 var(--sans); color: var(--ink); text-align: right; }
+body.wallet .kv .dl b { color: var(--gold-d); }
+body.wallet .prog { margin-top: 18px; }
+body.wallet .prog .t { display: flex; justify-content: space-between; align-items: baseline; font: 400 12.5px/1 var(--sans); color: var(--soft); }
+body.wallet .prog .t b { font: 600 20px/1 "Cormorant Garamond", serif; color: var(--ink); font-variant-numeric: lining-nums; }
+body.wallet .bar { height: 2px; background: var(--hair2); margin-top: 12px; position: relative; }
+body.wallet .bar i {
+  position: absolute; left: 0; top: -1px; height: 4px; width: 0; border-radius: 2px;
+  background: var(--metal); transition: width .4s cubic-bezier(.22, .61, .36, 1);
+}
+body.wallet .alloc { margin-top: 10px; }
+body.wallet .pr { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--hair2); }
+body.wallet .pz { width: 34px; flex: none; font: italic 500 30px/1 "Cormorant Garamond", serif; text-align: center; }
+body.wallet .pz sup { font: 500 10px/1 var(--sans); font-style: normal; letter-spacing: .06em; margin-left: 1px; vertical-align: 9px; }
+body.wallet .pn { flex: 1; min-width: 0; }
+body.wallet .pn b { display: block; font: 500 14px/1.25 var(--sans); color: var(--ink); }
+body.wallet .pn small { display: block; font: 400 12px/1.35 var(--sans); color: var(--soft); margin-top: 3px; }
+body.wallet .step { display: flex; align-items: center; gap: 4px; }
+body.wallet .step button {
+  all: unset; cursor: pointer; width: 30px; height: 30px; border-radius: 50%;
+  border: 1px solid var(--hair); display: flex; align-items: center; justify-content: center;
+  color: var(--gold-d); font: 400 15px/1 var(--sans);
+}
+body.wallet .step button:disabled { opacity: .35; cursor: default; }
+body.wallet .step b,
+body.wallet .held {
+  min-width: 26px; text-align: center; font: 600 22px/1 "Cormorant Garamond", serif;
+  color: var(--ink); font-variant-numeric: lining-nums;
+}
+body.wallet .note { margin-top: 18px; display: flex; gap: 10px; align-items: center; font: 400 12.5px/1.4 var(--sans); color: var(--text); }
+body.wallet .note > i {
+  width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--gold); color: var(--gold-d);
+  font: 500 10px/16px var(--sans); font-style: normal; text-align: center; flex: none;
+}
+body.wallet .note.done > i { background: var(--gold); color: #fff; border-color: var(--gold); line-height: 16px; }
+body.wallet .quiet { margin-top: 16px; font: 400 13px/1.5 var(--sans); color: var(--soft); }
+body.wallet .note-miss { margin-top: 16px; font: 400 12.5px/1.45 var(--sans); color: var(--text); }
+body.wallet .mt-submit {
+  all: unset; box-sizing: border-box; display: block; width: 100%; text-align: center;
+  margin-top: 16px; cursor: pointer; background: var(--btn); color: #fff;
+  font: 500 12px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase;
+  border-radius: 99px; padding: 14px 18px;
+}
+html[data-lang="zh"] body.wallet .mt-submit { letter-spacing: .12em; text-transform: none; font-size: 13px; }
+body.wallet .mt-submit:disabled { opacity: .4; cursor: default; }
+body.wallet .alloc-error { margin-top: 8px; }
+
+body.wallet .winners { margin-top: 18px; }
+body.wallet .winners h4 { font: 500 10.5px/1 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin: 0 0 8px; }
+body.wallet .winners ul { list-style: none; margin: 4px 0 0; padding: 0; }
+body.wallet .winners li { font: 400 13px/1.45 var(--sans); color: var(--text); padding: 3px 0; }
+body.wallet .winners li.me { color: var(--ink); }
+body.wallet .banner-sub { margin-top: 8px; font: 400 13px/1.45 var(--sans); color: var(--soft); }
+body.wallet .banner-go {
+  all: unset; cursor: pointer; flex: none; background: var(--btn); color: #fff;
+  font: 500 12px/1 var(--sans); letter-spacing: .12em; border-radius: 99px; padding: 12px 16px;
+}
+body.wallet .ge-banner,
+body.wallet .win-banner { margin-bottom: 18px; }
+body.wallet .win-banner h2.h2,
+body.wallet .ge-banner h2.h2 { font-size: 28px; }
+html[data-lang="zh"] body.wallet .win-banner h2.h2,
+html[data-lang="zh"] body.wallet .ge-banner h2.h2 { font-size: 22px; }
+body.wallet .win-banner ul { list-style: none; margin: 10px 0 0; padding: 0; }
+
+body.wallet .fin {
+  position: relative; margin-top: 22px; border-radius: 22px; overflow: hidden;
+  background: var(--card); border: 1px solid var(--hair2);
+  box-shadow: 0 24px 48px rgba(90, 64, 24, .1);
+  text-align: center; padding: 236px 24px 30px;
+  display: flex; flex-direction: column; align-items: center;
+}
+body.wallet .fin .im {
+  position: absolute; left: 0; right: 0; top: 0; height: 270px;
+  background: url("../assets/wallet/cascade.webp") center 40% / cover;
+}
+body.wallet .fin .im::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255, 253, 248, 0) 40%, var(--card) 98%);
+}
+body.wallet .fin > *:not(.im) { position: relative; }
+body.wallet .fin .h2 { font-size: 38px; margin-top: 12px; }
+html[data-lang="zh"] body.wallet .fin .h2 { font-size: 28px; }
+body.wallet .fin .worth { margin-top: 22px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+body.wallet .fin .worth b { font: 600 46px/1 "Cormorant Garamond", serif; font-variant-numeric: lining-nums; }
+body.wallet .fin .gp { margin-top: 14px; font: 400 12.5px/1.6 var(--sans); color: var(--text); }
+body.wallet .fin .gp > span + span::before { content: "·"; margin: 0 8px; color: var(--gold); }
+body.wallet .fin .rule { width: 70%; margin: 24px auto 22px; }
+body.wallet .fin .stats { display: flex; justify-content: center; width: 100%; }
+body.wallet .fin .stats div { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+body.wallet .fin .stats div + div { border-left: 1px solid var(--hair2); }
+body.wallet .fin .stats b { font: 500 34px/1 "Cormorant Garamond", serif; color: var(--ink); font-variant-numeric: lining-nums; }
+body.wallet .fin .stats small { font: 500 9.5px/1.3 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--soft); }
+html[data-lang="zh"] body.wallet .fin .stats small { letter-spacing: .14em; font-size: 11px; text-transform: none; }
+body.wallet .fin p { margin: 22px 0 0; font: 400 12.5px/1.55 var(--sans); color: var(--soft); max-width: 28ch; text-wrap: balance; }
+html[data-lang="zh"] body.wallet .fin p { max-width: none; }
+body.wallet .fin .date { margin-top: 16px; font: 500 11px/1 var(--sans); letter-spacing: .24em; text-transform: uppercase; color: var(--gold-d); }
+html[data-lang="zh"] body.wallet .fin .date { letter-spacing: .14em; text-transform: none; font-size: 12px; }
+
+body.wallet .earn .sub { font: 400 13px/1.55 var(--sans); color: var(--soft); margin: 12px 0 0; text-align: center; }
+body.wallet .earnh { text-align: center; }
+body.wallet .ways { margin-top: 22px; display: flex; flex-direction: column; }
+body.wallet .way { display: flex; gap: 16px; padding: 20px 0; border-top: 1px solid var(--hair2); }
+body.wallet .wi {
+  width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--hair);
+  display: flex; align-items: center; justify-content: center; flex: none;
+}
+body.wallet .wi svg { width: 17px; height: 17px; stroke: var(--gold-d); fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+body.wallet .wt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+body.wallet .wt > b {
+  font: 500 14px/1.3 var(--sans); color: var(--ink);
+  display: flex; justify-content: space-between; gap: 8px; align-items: baseline;
+}
+body.wallet .wt > b em { font: italic 600 16px/1 "Cormorant Garamond", serif; color: var(--gold-d); white-space: nowrap; }
+html[data-lang="zh"] body.wallet .wt > b em { font: 500 12px/1 var(--sans); font-style: normal; }
+body.wallet .wt > small { font: 400 12.5px/1.5 var(--sans); color: var(--soft); }
+body.wallet .ladder { position: relative; margin: 16px 10px 4px; height: 40px; }
+body.wallet .ladder .rail { position: absolute; left: 0; right: 0; top: 5px; height: 1px; background: var(--hair); }
+body.wallet .ladder .rail i { position: absolute; left: 0; top: -1px; height: 3px; border-radius: 2px; background: var(--metal); }
+body.wallet .mk {
+  position: absolute; top: 0; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+body.wallet .mk > span { width: 11px; height: 11px; border-radius: 50%; background: var(--paper); border: 1px solid var(--gold); }
+body.wallet .mk.reached > span { background: var(--gold); }
+body.wallet .mk small { font: 500 10.5px/1 var(--sans); color: var(--soft); white-space: nowrap; }
+body.wallet .mk small b { font: 600 13px/1 "Cormorant Garamond", serif; color: var(--ink); }
+body.wallet .nudge { font: 400 12.5px/1.5 var(--sans); color: var(--text); margin-top: 8px; }
+body.wallet .nudge b { font-weight: 500; color: var(--gold-d); }
+body.wallet .code {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  margin-top: 10px; border: 1px dashed var(--hair); border-radius: 12px; padding: 6px 6px 6px 16px;
+}
+body.wallet .code output { font: 500 14px/1 var(--sans); letter-spacing: .08em; color: var(--ink); }
+body.wallet .tbc { font: 400 11px/1.4 var(--sans); color: var(--soft); font-style: italic; }
+body.wallet .vouch { text-align: center; padding: 40px 20px; }
+body.wallet .vouch .sub { margin-top: 12px; font: 400 13px/1.5 var(--sans); color: var(--soft); }
+body.wallet .v-list { display: flex; flex-direction: column; gap: 12px; }
+body.wallet .foot { text-align: center; margin-top: 44px; }
+body.wallet .foot img { height: 12px; opacity: .7; }
+
+body.wallet .golden.is-stage { padding: 0; overflow: hidden; background: #f6efe1; }
+body.wallet .golden[hidden] { display: none !important; }
+body.wallet .golden.is-stage .ge-mount { position: absolute; inset: 0; }
+body.wallet .golden .ge-tools {
+  position: absolute; z-index: 8; top: calc(12px + env(safe-area-inset-top)); right: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+body.wallet .golden .ge-tools .lang-switch { display: flex; align-items: center; gap: 6px; }
+body.wallet .golden .ge-tools .lang-btn {
+  all: unset; cursor: pointer; font: 600 11px/1 Jost, system-ui, sans-serif; letter-spacing: .12em;
+  color: #7a6740; padding: 6px 2px;
+}
+body.wallet .golden .ge-tools .lang-btn.is-on { color: #7f5c1c; box-shadow: inset 0 -1px 0 #a9843f; }
+body.wallet .golden .ge-later {
+  all: unset; cursor: pointer; font: 600 11px/1 Jost, system-ui, sans-serif; letter-spacing: .06em;
+  color: #7a6740; background: rgba(255, 250, 240, .78);
+  border: 1px solid rgba(169, 132, 63, .35); border-radius: 999px; padding: 8px 12px;
+}
+body.wallet.is-golden .env-banner { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  body.wallet .ticket.spring { transition: none; }
+  body.wallet .ticket .sheen::before { display: none; }
+  body.wallet .track .pip { transition: none; }
+}

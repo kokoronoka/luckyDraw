@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <script>try{var l=localStorage.getItem('zv-lang')==='en'?'en':'zh';document.documentElement.dataset.lang=l;document.documentElement.lang=l==='en'?'en':'zh-Hans';}catch(e){}</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>销售 · ZÉLL-V Lucky Draw</title>
+  <link rel="icon" href="assets/logos/carousel-icon-32.png">
+  <meta name="theme-color" content="#FBF6EA">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Noto+Sans+SC:wght@500;700&family=Noto+Serif+SC:wght@700;900&family=Playfair+Display:ital,wght@0,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=3">
+</head>
+<body class="staff">
+  <header class="topbar">
+    <div class="topbar-brand"><img class="brand-word" src="assets/logos/zellv-wordmark-charcoal.webp" alt="ZÉLL-V"></div>
+    <nav class="topnav" id="topnav" hidden></nav>
+    <div class="topbar-user">
+      <span id="who" class="who"></span>
+      <button type="button" class="btn btn-ghost btn-sm" id="logout-btn">退出 <span class="en">Log out</span></button>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button type="button" role="tab" class="tab active" id="tab-btn-issue" aria-controls="tab-issue" aria-selected="true">发放抽奖券 <span class="en">Issue tickets</span></button>
+    <button type="button" role="tab" class="tab" id="tab-btn-customers" aria-controls="tab-customers" aria-selected="false"><span id="customers-tab-label">我的顾客</span> <span class="en" id="customers-tab-label-en">My customers</span></button>
+  </nav>
+
+  <main class="container">
+    <!-- ======================= ISSUE TICKETS ======================= -->
+    <section id="tab-issue" role="tabpanel" aria-labelledby="tab-btn-issue">
+      <form id="issue-form" class="card" novalidate autocomplete="off">
+        <h2 class="card-title">顾客资料 <span class="en">Customer</span></h2>
+
+        <label class="field">
+          <span class="label">电话号码 <span class="en">Phone</span> <i class="req">*</i></span>
+          <input type="tel" id="f-phone" inputmode="tel" placeholder="012-345 6789" required>
+          <span class="hint" id="phone-hint" aria-live="polite"></span>
+        </label>
+
+        <div class="grid-2">
+          <label class="field">
+            <span class="label">姓名 <span class="en">Name</span> <i class="req">*</i></span>
+            <input type="text" id="f-name" maxlength="80" required>
+          </label>
+          <label class="field">
+            <span class="label">电邮 <span class="en">Email (optional)</span></span>
+            <input type="email" id="f-email" maxlength="120">
+          </label>
+        </div>
+
+        <h2 class="card-title">发票 <span class="en">Invoice</span></h2>
+        <div class="grid-2">
+          <label class="field">
+            <span class="label">发票号码 <span class="en">Invoice no.</span> <i class="req">*</i></span>
+            <input type="text" id="f-invoice" maxlength="60" required autocapitalize="characters">
+          </label>
+          <label class="field">
+            <span class="label">发票日期 <span class="en">Invoice date</span> <i class="req">*</i></span>
+            <input type="date" id="f-date" required>
+            <span class="hint" id="round-hint" aria-live="polite"></span>
+          </label>
+        </div>
+
+        <fieldset class="field">
+          <legend class="label">来源 <span class="en">Source</span></legend>
+          <div class="segmented">
+            <label><input type="radio" name="f-source" value="purchase" checked><span>购买 <span class="en">Purchase</span></span></label>
+            <label><input type="radio" name="f-source" value="topup"><span>加购 <span class="en">Top Up</span></span></label>
+          </div>
+        </fieldset>
+
+        <label class="field">
+          <span class="label" id="pkg-label">配套 <span class="en">Package</span> <i class="req">*</i></span>
+          <select id="f-package" required></select>
+        </label>
+
+        <label class="field" id="qty-field">
+          <span class="label" id="qty-label">数量 <span class="en">Quantity</span> <i class="req">*</i></span>
+          <div class="stepper stepper-lg">
+            <button type="button" class="step" data-step="-1" aria-label="减少 Decrease">−</button>
+            <input type="number" id="f-qty" min="1" max="100" step="1" value="1" inputmode="numeric" required>
+            <button type="button" class="step" data-step="1" aria-label="增加 Increase">+</button>
+          </div>
+        </label>
+
+        <div class="ticket-estimate" id="ticket-estimate" aria-live="polite"></div>
+
+        <label class="field" id="referrer-field">
+          <span class="label">推荐人电话 <span class="en">Referrer's phone (optional, new customers only)</span></span>
+          <input type="tel" id="f-referrer" inputmode="tel" placeholder="012-345 6789">
+          <span class="hint" id="referrer-hint" aria-live="polite"></span>
+        </label>
+
+        <p id="issue-error" class="form-error" role="alert" hidden></p>
+        <button type="submit" class="btn btn-primary btn-block" id="preview-btn">预览 <span class="en">Preview</span></button>
+      </form>
+
+      <!-- Preview -->
+      <div id="preview" class="card card-accent" hidden>
+        <h2 class="card-title">请确认 <span class="en">Please confirm</span></h2>
+        <div id="preview-body"></div>
+        <p id="confirm-error" class="form-error" role="alert" hidden></p>
+        <div class="btn-row">
+          <button type="button" class="btn btn-ghost" id="edit-btn">返回修改 <span class="en">Edit</span></button>
+          <button type="button" class="btn btn-primary" id="confirm-btn">确认发放 <span class="en">Confirm</span></button>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div id="result" class="card card-success" hidden>
+        <div class="success-head">
+          <div class="success-icon" aria-hidden="true">✓</div>
+          <div>
+            <h2 class="card-title">已发放 <span class="en">Tickets issued</span></h2>
+            <p id="result-summary" class="muted"></p>
+          </div>
+        </div>
+        <label class="field">
+          <span class="label">顾客钱包链接 <span class="en">Customer wallet link</span></span>
+          <div class="copy-row">
+            <input type="text" id="result-link" readonly>
+            <button type="button" class="btn btn-ghost" id="copy-btn">复制 <span class="en">Copy</span></button>
+          </div>
+        </label>
+        <a class="btn btn-whatsapp btn-block" id="wa-btn" target="_blank" rel="noopener">
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg>
+          WhatsApp 发送给顾客 <span class="en">Send to customer</span>
+        </a>
+        <a class="btn btn-ghost btn-block" id="wa-ref-btn" target="_blank" rel="noopener" hidden>WhatsApp 通知推荐人 <span class="en">Notify referrer</span></a>
+        <button type="button" class="btn btn-ghost btn-block" id="another-btn">发放下一张 <span class="en">Issue another</span></button>
+      </div>
+    </section>
+
+    <!-- ======================= MY CUSTOMERS ======================= -->
+    <section id="tab-customers" role="tabpanel" aria-labelledby="tab-btn-customers" hidden>
+      <div class="stats-row" id="cust-stats"></div>
+      <div class="toolbar">
+        <input type="search" id="cust-search" placeholder="搜索姓名或电话" data-ph-zh="搜索姓名或电话" data-ph-en="Search name or phone" aria-label="搜索 Search">
+        <label class="check"><input type="checkbox" id="cust-filter-unalloc"> 有未分配 <span class="en">Has unallocated</span></label>
+        <button type="button" class="btn btn-ghost btn-sm" id="cust-refresh">刷新 <span class="en">Refresh</span></button>
+      </div>
+      <div id="cust-list" class="cust-list"><p class="muted center">加载中… Loading…</p></div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js" defer></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/common.js" defer></script>
+  <script src="js/mock.js?v=3" defer></script>
+  <script src="js/sales.js?v=4" defer></script>
+</body>
+</html>

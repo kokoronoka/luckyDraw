@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <script>try{var l=localStorage.getItem('zv-lang')==='en'?'en':'zh';document.documentElement.dataset.lang=l;document.documentElement.lang=l==='en'?'en':'zh-Hans';}catch(e){}</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>管理 · ZÉLL-V Lucky Draw</title>
+  <link rel="icon" href="assets/logos/carousel-icon-32.png">
+  <meta name="theme-color" content="#FBF6EA">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Noto+Sans+SC:wght@500;700&family=Noto+Serif+SC:wght@700;900&family=Playfair+Display:ital,wght@0,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=3">
+</head>
+<body class="staff admin">
+  <header class="topbar">
+    <div class="topbar-brand"><img class="brand-word" src="assets/logos/zellv-wordmark-charcoal.webp" alt="ZÉLL-V"></div>
+    <nav class="topnav" id="topnav"></nav>
+    <div class="topbar-user">
+      <span id="who" class="who"></span>
+      <button type="button" class="btn btn-ghost btn-sm" id="logout-btn">退出 <span class="en">Log out</span></button>
+    </div>
+  </header>
+
+  <div id="denied" class="container" hidden>
+    <div class="card"><h2 class="card-title">只限管理员 <span class="en">Admins only</span></h2>
+      <a class="btn btn-primary" href="sales.html">返回销售页 <span class="en">Back to sales</span></a></div>
+  </div>
+
+  <div id="app" hidden>
+    <nav class="tabs" role="tablist">
+      <button type="button" role="tab" class="tab active" data-tab="stats">统计 <span class="en">Stats</span></button>
+      <button type="button" role="tab" class="tab" data-tab="customers">顾客 <span class="en">Customers</span></button>
+      <button type="button" role="tab" class="tab" data-tab="setup">轮次与奖项 <span class="en">Rounds &amp; prizes</span></button>
+      <button type="button" role="tab" class="tab" data-tab="staff">员工 <span class="en">Staff</span></button>
+      <button type="button" role="tab" class="tab" data-tab="export">导出 <span class="en">Export</span></button>
+    </nav>
+
+    <main class="container container-wide">
+      <!-- STATS -->
+      <section data-panel="stats">
+        <div class="toolbar">
+          <h2 class="section-h">活动统计 <span class="en">Event stats</span></h2>
+          <span class="muted small" id="stats-time"></span>
+          <button type="button" class="btn btn-ghost btn-sm" id="stats-refresh">刷新 <span class="en">Refresh</span></button>
+        </div>
+        <div id="stats-body"><p class="muted">加载中… Loading…</p></div>
+      </section>
+
+      <!-- CUSTOMERS -->
+      <section data-panel="customers" hidden>
+        <div class="toolbar">
+          <input type="search" id="c-search" placeholder="搜索姓名或电话" data-ph-zh="搜索姓名或电话" data-ph-en="Search name or phone" aria-label="搜索 Search">
+          <button type="button" class="btn btn-ghost btn-sm" id="c-refresh">刷新 <span class="en">Refresh</span></button>
+        </div>
+        <div class="split">
+          <div id="c-list" class="c-list"></div>
+          <div id="c-detail" class="c-detail"><p class="muted center empty">选择一位顾客 <span class="en">Select a customer</span></p></div>
+        </div>
+      </section>
+
+      <!-- SETUP -->
+      <section data-panel="setup" hidden>
+        <div class="card">
+          <h2 class="card-title">轮次 <span class="en">Rounds</span></h2>
+          <p class="small muted">所有时间为马来西亚时间 (MYT)。<span class="en">All times are MYT.</span></p>
+          <div class="table-wrap"><table class="data" id="rounds-table"></table></div>
+        </div>
+        <div class="card">
+          <h2 class="card-title">奖项与名额 <span class="en">Prizes &amp; winner slots</span></h2>
+          <div class="table-wrap"><table class="data" id="prizes-table"></table></div>
+        </div>
+        <div class="card">
+          <h2 class="card-title">规则设置 <span class="en">Rule settings</span></h2>
+          <form id="settings-form" class="settings"></form>
+        </div>
+      </section>
+
+      <!-- STAFF -->
+      <section data-panel="staff" hidden>
+        <div class="card">
+          <h2 class="card-title">员工 <span class="en">Staff</span></h2>
+          <p class="small muted">新增员工：Supabase → Authentication → Users → Add user（勾选 Auto Confirm）。新账号默认为销售。<br>
+            <span class="en">To add staff: Supabase → Authentication → Users → Add user (tick Auto Confirm). New accounts start as Sales.</span></p>
+          <div class="table-wrap"><table class="data" id="staff-table"></table></div>
+        </div>
+      </section>
+
+      <!-- EXPORT -->
+      <section data-panel="export" hidden>
+        <div class="card">
+          <h2 class="card-title">导出 CSV <span class="en">Export CSV</span></h2>
+          <p class="small muted">文件可直接用 Excel 打开。<span class="en">Files open directly in Excel.</span></p>
+          <div class="export-grid">
+            <button type="button" class="btn btn-primary" data-export="winners">🏆 得奖者 <span class="en">Winners</span></button>
+            <button type="button" class="btn btn-primary" data-export="grants">🎟 所有抽奖券记录 <span class="en">All ticket grants</span></button>
+            <button type="button" class="btn btn-primary" data-export="customers">👥 顾客汇总 <span class="en">Customer summary</span></button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="reason-dialog" class="dialog">
+    <form method="dialog">
+      <h2 class="reason-title"></h2>
+      <textarea rows="3" maxlength="300" placeholder="原因 Reason" aria-label="原因 Reason"></textarea>
+      <div class="btn-row">
+        <button value="cancel" class="btn btn-ghost">取消 <span class="en">Cancel</span></button>
+        <button value="ok" class="btn btn-primary">确认 <span class="en">Confirm</span></button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js" defer></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/common.js" defer></script>
+  <script src="js/mock.js?v=3" defer></script>
+  <script src="js/admin.js?v=4" defer></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <script>try{var l=localStorage.getItem('zv-lang')==='en'?'en':'zh';document.documentElement.dataset.lang=l;document.documentElement.lang=l==='en'?'en':'zh-Hans';}catch(e){}</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>员工登录 · ZÉLL-V Lucky Draw</title>
+  <link rel="icon" href="assets/logos/carousel-icon-32.png">
+  <meta name="theme-color" content="#FBF6EA">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Noto+Sans+SC:wght@500;700&family=Noto+Serif+SC:wght@700;900&family=Playfair+Display:ital,wght@0,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="staff login-page">
+  <main class="login-wrap">
+    <div class="login-card card">
+      <div class="brand-block">
+        <img class="brand-title-logo zh" src="assets/logos/campaign-title-logo-zh.webp" alt="ZÉLL-V 健康一起 Win">
+        <img class="brand-title-logo en" src="assets/logos/campaign-title-logo-en.webp" alt="ZÉLL-V Golden Ticket">
+        <p class="muted">员工登录 <span class="en">Staff login</span></p>
+      </div>
+
+      <form id="login-form" novalidate>
+        <label class="field">
+          <span class="label">电邮 <span class="en">Email</span></span>
+          <input type="email" id="email" autocomplete="username" required>
+        </label>
+        <label class="field">
+          <span class="label">密码 <span class="en">Password</span></span>
+          <input type="password" id="password" autocomplete="current-password" required>
+        </label>
+        <p id="login-error" class="form-error" role="alert" hidden></p>
+        <button type="submit" class="btn btn-primary btn-block" id="login-btn">登录 <span class="en">Log in</span></button>
+      </form>
+      <p class="muted small center">忘记密码？请联系管理员。<br><span class="en">Forgot your password? Ask an admin.</span></p>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js" defer></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/common.js" defer></script>
+  <script src="js/mock.js?v=3" defer></script>
+  <script src="js/login.js?v=2" defer></script>
+</body>
+</html>
